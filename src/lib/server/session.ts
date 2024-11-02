@@ -20,7 +20,7 @@ export async function createSession(token: string, userId: string): Promise<Sess
 	const session: Session = {
 		_id: sessionId,
 		userId,
-		expiresAt: Date.now() + THIRTY_DAYS_IN_MS
+		expiresAt: new Date(Date.now() + THIRTY_DAYS_IN_MS)
 	};
 	const result = await sessions.insertOne(session);
 	if (!result.acknowledged) {
@@ -38,14 +38,14 @@ export async function validateSessionToken(token: string): Promise<SessionValida
 	}
 
 	// Check if session is expired
-	if (Date.now() >= session.expiresAt) {
+	if (Date.now() >= session.expiresAt.getTime()) {
 		await sessions.deleteOne({ _id: session._id });
 		return { session: null, user: null };
 	}
 
 	// Check if we need to extend the session (if less than 15 days remaining)
-	if (Date.now() >= session.expiresAt - FIFTEEN_DAYS_IN_MS) {
-		const newExpiresAt = Date.now() + THIRTY_DAYS_IN_MS;
+	if (Date.now() >= session.expiresAt.getTime() - FIFTEEN_DAYS_IN_MS) {
+		const newExpiresAt = new Date(Date.now() + THIRTY_DAYS_IN_MS);
 		await sessions.updateOne({ _id: sessionId }, { $set: { expiresAt: newExpiresAt } });
 		session.expiresAt = newExpiresAt;
 	}

@@ -67,7 +67,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 
 	const sessionToken = generateSessionToken();
 	const session = await createSession(sessionToken, user._id);
-	setSessionTokenCookie(event, sessionToken, new Date(session.expiresAt));
+	setSessionTokenCookie(event, sessionToken, session.expiresAt);
 
 	return new Response(null, {
 		status: 302,

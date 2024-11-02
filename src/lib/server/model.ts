@@ -9,7 +9,7 @@ export type User = {
 export type Session = {
     _id: string;
     userId: string;
-    expiresAt: number;
+    expiresAt: Date;
 }
 
 export type SessionValidationResult =

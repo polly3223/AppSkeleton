@@ -8,3 +8,16 @@ const db = client.db(SECRET_DB_NAME, { ignoreUndefined: true });
 export const users = db.collection<User>('users');
 export const sessions = db.collection<Session>('sessions');
 
+export async function initializeDatabase() {
+    await sessions.createIndex(
+        { expiresAt: 1 },
+        { 
+            expireAfterSeconds: 0,
+            name: "session_ttl_index"
+        }
+    );
+}
+
+// Initialize database connection and indexes
+initializeDatabase().catch(console.error);
+
