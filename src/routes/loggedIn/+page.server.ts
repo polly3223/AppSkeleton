@@ -1,16 +1,6 @@
 import { fail, redirect } from "@sveltejs/kit";
 import { invalidateSession, deleteSessionTokenCookie } from "$lib/server/session";
-import type { Actions, PageServerLoad } from "./$types";
-
-export const load: PageServerLoad = async ({ locals }) => {
-    if (!locals.user) {
-        throw redirect(302, "/login");
-    }
-
-    return {
-        user: locals.user
-    };
-};
+import type { Actions } from "./$types";
 
 export const actions: Actions = {
     default: async (event) => {
