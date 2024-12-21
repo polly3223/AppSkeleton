@@ -1,4 +1,4 @@
-# SvelteKit + Tailwind + Bun Starter + MongoDB
+# SvelteKit + Tailwind + Bun + MongoDB  Starter
 
 A modern web application skeleton built with SvelteKit, Tailwind CSS, and Bun, featuring Google OAuth authentication and MongoDB integration.
 
